@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background-color: orange;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="向前走"/>
+		<div></div>
+	</body>
+	<script>
+	var aIpt = document.getElementsByTagName('input')[0];
+	var aDiv = document.getElementsByTagName('div')[0];
+	var timer = null;
+	aIpt.onclick = function(){
+		
+		timer=setInterval(function(){
+			var dis=aDiv.offsetLeft+8;
+			if(dis>=800){
+//				aDiv.offsetLeft+8=800;//????????
+             dis=800;
+			}
+			aDiv.style.left = dis+'px';
+			  if(dis==800){
+		 	clearInterval(timer);
+		 	timer=null;
+		 }
+		},30);
+		
+	}
+	</script>
+</html>

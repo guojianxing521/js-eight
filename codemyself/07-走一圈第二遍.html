@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background-color: skyblue;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+			input{
+				width: 80px;
+				height: 30px;
+				background-color: #00BFFF;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="走一圈"/>
+		<div></div>
+		<script>
+			var aIpt = document.getElementsByTagName('input')[0];
+			var aDiv = document.getElementsByTagName('div')[0];
+			aIpt.onclick=function(){
+				move(aDiv,'left',8,800,function(){
+					move(aDiv,'top',8,500,function(){
+					  move(aDiv,'left',8,100,function(){
+					    move(aDiv,'top',8,100);
+				})
+				})
+				})
+			}
+			
+			function move(obj,attr,speed,target,fn){
+				   obj.timer =null;
+				   var dis = parseFloat(getStyle(obj,attr))
+				   speed = dis>target? -speed:speed;
+				   obj.timer= setInterval(function(){
+				   	//获取obj的attr属性值，改变为数字类型
+				  
+				    dis+=speed;
+				   	//限制范围
+				   	if(dis>=target&&speed>0||dis<=target&&speed<0){
+				   		dis=target;
+				   	}
+				   	//设置obj元素的left值
+				   	obj.style[attr] = dis+'px';
+				   	
+				   	//到达指定目标位置之后，清除定时器
+				   	if(dis==target){
+				   		clearInterval(obj.timer);
+				   		obj.timer=null;
+				   		fn&&fn();//回调函数，当obj走到目标位置并且清除定时器之后，需要继续执行的函数
+				   	}
+				   },10)//给元素timer属性挂载循环定时器
+			}
+			function getStyle(obj,attr){
+				return obj.currentStyle? obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+			}
+		
+		</script>
+	</body>
+</html>

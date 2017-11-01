@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background-color: orange;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--<input type="button" value="向前走"/>
+		<input type="button" value="往后走"/>
+		<input type="button" value="向下走"/>
+		<input type="button" value="往上走"/>-->
+		<input type="button" value="走一圈"/>
+		<div></div>
+	</body>
+	<script>
+	var aIpt = document.getElementsByTagName('input');
+	var aDiv = document.getElementsByTagName('div')[0];
+//	var timer = null;
+	//封装一下
+//		aIpt[0].onclick = function(){
+//			move(aDiv,'left',8,800);
+//		}
+//		aIpt[1].onclick = function(){
+//			move(aDiv,'left',-8,100);
+//		}
+//		aIpt[2].onclick = function(){
+//			move(aDiv,'top',8,500);
+//		}
+//		aIpt[3].onclick = function(){
+//			move(aDiv,'top',-8,100);
+//		}
+        aIpt[0].onclick = function(){
+			move(aDiv,'left',8,800,function(){
+					move(aDiv,'top',8,500,function(){
+						move(aDiv,'left',8,100,function(){
+								move(aDiv,'top',8,100);
+						})
+					})
+			})
+		}
+	function move(obj,attr,speed,target,fn){
+		//运动的目标  运动的属性  运动的速度  运动的目标位置  运动完之后需要进行的下一步
+		
+		//每次运动之前清除之前的定时器
+//		clearInterval(obj.timer);
+//		obj.timer=null;
+//       通过函数获取运动的属性
+		var dis =parseFloat(getStyle(obj,attr));
+		//判断初始位置和目标位置的大小来控制speed的正负
+		speed=dis>target? -speed:speed;
+		//给目标元素加定时器
+		obj.timer=setInterval(function(){
+			//每30毫秒，加一次speed
+			dis+=speed;
+			//如果已经到达目标位置，限制它的数值
+			if(dis>=target&&speed>0||dis<=target&&speed<0){
+             dis=target;
+			}
+			//给目标属性赋值
+			obj.style[attr]= dis+'px';
+		   
+		   //如果到达目标，清除定时器
+		   if(dis==target){
+		 	clearInterval(obj.timer);
+		 	obj.timer=null;
+		 	
+		 	fn&&fn();//回调函数
+		 }
+		},30);
+	}
+	
+	//获取运动的属性函数
+	  function getStyle(obj,attr){
+		if(obj.currentStyle){
+			return obj.currentStyle[attr];
+		}else{
+			return getComputedStyle(obj)[attr];
+		}
+	}
+	</script>
+</html>
+

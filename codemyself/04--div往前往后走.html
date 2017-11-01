@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background-color: orange;
+				position: absolute;
+				left: 100px;
+				top: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="button" value="向前走"/>
+		<input type="button" value="往后走"/>
+		<div></div>
+	</body>
+	<script>
+	var aIpt = document.getElementsByTagName('input');
+	
+	var aDiv = document.getElementsByTagName('div')[0];
+	var timer = null;
+//	aIpt[0].onclick = function(){
+//		
+//	timer=setInterval(function(){
+//			var dis=aDiv.offsetLeft+8;
+//			if(dis>=800){
+////				aDiv.offsetLeft+8=800;//????????
+//           dis=800;
+//			}
+//			aDiv.style.left = dis+'px';
+//		   if(dis==800){
+//		 	clearInterval(timer);
+//		 	timer=null;
+//		 }
+//		},30);
+//		
+//	}
+//	aIpt[1].onclick = function(){
+//		
+//		timer=setInterval(function(){
+//			var dis=aDiv.offsetLeft-8;
+//			if(dis<=100){
+////				aDiv.offsetLeft+8=800;//????????
+//           dis=100;
+//			}
+//			aDiv.style.left = dis+'px';
+//			if(dis==100){
+//		 	clearInterval(timer);
+//		 	timer=null;
+//		 }
+//		},30);
+//		
+//	}
+	
+	//封装一下
+		aIpt[0].onclick = function(){
+			move(8,800);
+		}
+		aIpt[1].onclick = function(){
+			move(-8,100);
+		}
+	function move(speed,target){
+		
+		clearInterval(timer);
+		timer=null;
+		timer=setInterval(function(){
+			var dis=aDiv.offsetLeft+speed;
+			if(dis>=target&&speed>0){
+             dis=800;
+			}
+			if(dis<=target&&speed<0){
+             dis=100;
+			}
+			aDiv.style.left = dis+'px';
+		   if(dis==target){
+		 	clearInterval(timer);
+		 	timer=null;
+		 }
+		},30);
+	}
+	</script>
+</html>

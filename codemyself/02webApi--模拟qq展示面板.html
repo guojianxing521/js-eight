@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 250px;
+				height: 400px;
+				background-color: pink;
+				margin: 40px;
+			}
+			#box #photo {
+				width: 60px;
+				height: 60px;
+				background-color: deeppink;
+				float: right;
+				margin: 20px 10px 0 0;
+				cursor: pointer;
+			/*	display: none;*/
+			}
+			#msg {
+				width: 150px;
+				height: 250px;
+				background-color: blue;
+				position: absolute;
+				left: 310px;
+				top: 40px;
+				display: none;
+
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div id="photo">头像</div>
+		</div>
+		<div id="msg">个人信息</div>
+	</body>
+	<script type="text/javascript">
+		function $(id) {
+			return document.getElementById(id);
+		}
+		
+	    var oPhoto= $('photo')
+		var oMsg =$('msg');
+		var timer=null;
+		//给图片加鼠标移上事件，移上让它显示
+//		oPhoto.onmouseover=function(){
+//			oMsg.style.display='block';
+//		}
+//	
+//		//给图片加鼠标移出事件，移除300毫秒时让它消失，为了把鼠标移到oMsgSHANGM
+//		oPhoto.onmouseout=function(){
+//			timer=setTimeout(function(){
+//			oMsg.style.display='none';
+//			},300);
+//		}
+//    鼠标移上oMsg,不再执行延时器，让自己显示
+//		oMsg.onmouseover = function(){
+//			clearTimeout(timer);
+//			timer=null;
+//			this.style.display='block';
+//		}
+//  移除隐藏
+//		oMsg.onmouseout=function(){
+//			this.style.display='none';
+//		}
+//  优化
+    oMsg.onmouseover=oPhoto.onmouseover=function(){
+			clearTimeout(timer);
+			timer=null;
+			oMsg.style.display='block';
+		}
+    oPhoto.onmouseout=oMsg.onmouseout=function(){
+			timer=setTimeout(function(){
+			oMsg.style.display='none';
+			},300);
+		}
+	</script>
+</html>
